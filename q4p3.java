@@ -6,14 +6,17 @@ public class q4p3{
         int[] input  = {1,2,3,4,5,6,7};
         Node root = buildTree(input, 0, input.length-1);
         preOrder(root);
-        q.add(root);
-        separate(list, q);
-        System.out.println(list.size());
-        // System.out.println(list.get(0).get(0));
-        System.out.println(list.get(1).get(0));
-        System.out.println(list.get(2).get(0));
-
+        //q.add(root);
+        //separate(list, q);
+        ArrayList<LinkedList<Node>> ans = separateTwo(root);
+        System.out.println(ans.size());
+        System.out.println(">> "+ans.get(0));
+        System.out.println(">> "+ans.get(1));
+        System.out.println(">> "+ans.get(2));
+        //System.out.println(">> "+ans.get(3));
     }
+
+
     public static Node buildTree(int[] arr, int start, int end){
         if(start > end) return null;
         int mid = (start + end)/2;
@@ -32,7 +35,7 @@ public class q4p3{
         preOrder(root.left);
         preOrder(root.right);
     }
-
+    //bad solution
     public static void separate(List<LinkedList> list, LinkedList<Node> q){
         LinkedList<Node> buf = new LinkedList<>();
         while(q.size()!=0){
@@ -46,6 +49,37 @@ public class q4p3{
                 q.add(buf.removeFirst());
             }
         }
+    }
+
+    //good solution
+    //A: below two comment lines are tricky. It doesnt work.
+    //In lists, it stores list address, but it doesn't sotre the Node address
+    //directly.
+    //Then, list give its addres to temp.
+    //In the inner while loop, when I remove elements from temp, that means I
+    //indirectly remove the element in lists.
+    //So, be careful. In array which contain other arrays,
+    //make sure to understand what are stored in array!!!!!
+    public static ArrayList<LinkedList<Node>> separateTwo(Node root){
+        ArrayList<LinkedList<Node>> lists = new ArrayList<>();
+        LinkedList<Node> list = new LinkedList<>();
+        if(root != null)
+            list.add(root);
+        while(list.size()>0){
+            lists.add(list);
+            LinkedList<Node> temp = list;
+            list = new LinkedList<Node>();
+            for(Node nd: temp){ // much better way
+            //while(temp.size()>0){
+            //  Node nd = temp.removeFirst();  // very bad....
+                System.out.println(nd);
+                if(nd.left != null)
+                    list.add(nd.left);
+                if(nd.right != null)
+                    list.add(nd.right);
+            }
+        }
+        return lists;
     }
 }
 
