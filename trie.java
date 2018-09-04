@@ -1,4 +1,5 @@
 import java.util.*;
+//test
 public class trie{
     static final int ALPHABET_SIZE = 26;
     static class TrieNode{
