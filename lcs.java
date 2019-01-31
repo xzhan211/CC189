@@ -1,6 +1,6 @@
 import java.util.*;
 
-public class LCS{
+public class lcs{
 	public static void main(String[] args){
 		char[] arrA = {'a','b','c','b','e'};
 		char[] arrB = {'b','d','c','a','e'};
@@ -12,7 +12,9 @@ public class LCS{
 	//brute force
 	//T: O(n*2^m)
 	public static int bf(char[] arrA, char[] arrB){
-		List<List<Character>> ans = new ArrayList<>();
+		//比较arrA和arrB的长度，然后用较短的去提取全部顺序子序列
+        //会快些
+        List<List<Character>> ans = new ArrayList<>();
 		for(int i = 1; i <= arrA.length; i++){
 			helper(ans, arrA, new ArrayList<Character>(), i, 0);
 		}
@@ -48,14 +50,15 @@ public class LCS{
 				i++;
 				j++;
 			}else
-				j++;
+				j++; // 在这里只能是长数列的位置递增
+                    // 当出现短列(a,b,c), 长列(e,b,c,d)时，可以跳过e
 		}
 
 		if(i==list.size() && j<=arr.length)
 			return true;
 		else if(i<list.size() && j==arr.length)
 			return false;
-		else 
+		else
 			return false;
 	}
 
@@ -69,7 +72,7 @@ public class LCS{
     public static int lenLCS(char[] arrA, char[] arrB, int lastA, int lastB){
     	//System.out.println("**");
     	if(lastA < 0 || lastB < 0) return 0;
-    	if(arrA[lastA] == arrB[lastB]) 
+    	if(arrA[lastA] == arrB[lastB])
     		return lenLCS(arrA, arrB, lastA-1, lastB-1) + 1;
     	else
     		return Math.max(lenLCS(arrA, arrB, lastA-1,lastB), lenLCS(arrA, arrB, lastA,lastB-1));
@@ -100,4 +103,3 @@ public class LCS{
     	return matrix[arrA.length][arrB.length];
     }
 }
-
