@@ -27,7 +27,8 @@ public class ShortestPath{
         dist[start] = 0;
         for(int i=0; i<matrix.length; i++)
             parent[i] = i;
-        PriorityQueue<int[]> queue = new PriorityQueue<>((a, b) -> a[1] - b[1]);
+        //PriorityQueue<int[]> queue = new PriorityQueue<>((a, b) -> a[1] - b[1]);
+        Queue<int[]> queue = new LinkedList<>();
         queue.offer(new int[]{start, 0});
         while(!queue.isEmpty()){
             int[] cur = queue.poll();
