@@ -3,6 +3,7 @@ public class BitReverse{
         int n = Integer.valueOf(args[0]);
         int lo = 0;
         int hi = 31;
+        int test = 100;
         while(hi > lo){
             int h = 1 & n>>>hi;
             int l = 1 & n>>>lo;
